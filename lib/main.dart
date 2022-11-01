@@ -4,15 +4,15 @@ import 'package:tic_tac_toe/tile_state.dart';
 import 'board_tile.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(TicTacToe());
 }
 
-class MyApp extends StatefulWidget {
+class TicTacToe extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _MyAppState();
+  State<StatefulWidget> createState() => _TicTacToeState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _TicTacToeState extends State<TicTacToe> {
   final navigatorKey = GlobalKey<NavigatorState>();
   var _boardState = List.filled(9, TileState.EMPTY);
   var _currentTurn = TileState.CROSS;
@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> {
           return _boardState[a];
         }
       }
-      return null;
+      throw Exception;
     };
 
     //Winning Possibilities
@@ -132,7 +132,7 @@ class _MyAppState extends State<MyApp> {
       winnerForMatch(2, 4, 6),
     ];
 
-    TileState winner;
+    TileState? winner;
 
     for (int i = 0; i < checks.length; i++) {
       if (checks[i] != null) {
@@ -141,14 +141,14 @@ class _MyAppState extends State<MyApp> {
       }
     }
 
-    return winner;
+    return winner!;
   }
 
   //Dialog
   void _showWinnerDialog(TileState tileState) {
-    final context = navigatorKey.currentState.overlay.context;
+    final context = navigatorKey.currentState?.overlay?.context;
     showDialog(
-        context: context,
+        context: context!,
         builder: (_) {
           return AlertDialog(
             title: Text('Winner'),
@@ -157,7 +157,7 @@ class _MyAppState extends State<MyApp> {
                 : 'assets/images/o.png'),
             actions: [
               // ignore: deprecated_member_use
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     _resetGame();
                     Navigator.of(context).pop();

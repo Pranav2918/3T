@@ -7,10 +7,10 @@ class BoardTile extends StatelessWidget {
   final double dimension;
   final VoidCallback onPressed;
   const BoardTile({
-    Key key,
-    this.tileState,
-    this.dimension,
-    this.onPressed,
+    Key? key,
+    required this.tileState,
+    required this.dimension,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class BoardTile extends StatelessWidget {
     return Container(
         width: dimension,
         height: dimension,
-        child: FlatButton(
+        child: TextButton(
           onPressed: onPressed,
           child: _widgetForTileState(),
         ));
