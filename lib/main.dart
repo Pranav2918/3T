@@ -110,14 +110,15 @@ class _TicTacToeState extends State<TicTacToe> {
 
   //Find Winner
   TileState _findWinner() {
-    TileState Function(int, int, int) winnerForMatch = (a, b, c) {
+    TileState? Function(int, int, int) winnerForMatch = (a, b, c) {
       if (_boardState[a] != TileState.EMPTY) {
         if ((_boardState[a] == _boardState[b]) &&
             (_boardState[b] == _boardState[c])) {
           return _boardState[a];
         }
       }
-      throw Exception;
+      
+      return null;
     };
 
     //Winning Possibilities
