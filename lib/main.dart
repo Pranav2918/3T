@@ -42,7 +42,7 @@ class _TicTacToeState extends State<TicTacToe> {
               elevation: 0.0,
               backgroundColor: Colors.white,
               title: Text(
-                '3T',
+                'Tic Tac Toe',
                 style:
                     TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               )),
