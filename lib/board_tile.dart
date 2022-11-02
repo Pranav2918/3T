@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tic_tac_toe/tile_state.dart';
+import 'package:tic_tac_toe/utils/images.dart';
 
 class BoardTile extends StatelessWidget {
   final TileState tileState;
@@ -37,20 +38,15 @@ class BoardTile extends StatelessWidget {
 
       case TileState.CROSS:
         {
-          widget = Image.asset('assets/images/x.png');
+          widget = Image.asset(Images.crossImage);
         }
         break;
 
       case TileState.CIRCLE:
         {
-          widget = Image.asset('assets/images/o.png');
+          widget = Image.asset(Images.circleImage);
         }
         break;
-
-      case TileState.TIE:
-        {
-          widget = Image.asset('assets/image/tie.png');
-        }
     }
 
     return widget;

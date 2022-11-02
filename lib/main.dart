@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/tile_state.dart';
+import 'package:tic_tac_toe/utils/images.dart';
+import 'package:tic_tac_toe/utils/strings.dart';
 
 import 'board_tile.dart';
 
@@ -31,7 +33,7 @@ class _TicTacToeState extends State<TicTacToe> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: IconButton(
-                    tooltip: 'Restart',
+                    tooltip: AppStrings.restart,
                     icon: Icon(
                       Icons.refresh,
                       size: 28,
@@ -44,14 +46,14 @@ class _TicTacToeState extends State<TicTacToe> {
               elevation: 0.0,
               backgroundColor: Colors.white,
               title: Text(
-                'Tic Tac Toe',
+                AppStrings.title,
                 style:
                     TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               )),
           body: Center(
             child: SingleChildScrollView(
               child: Stack(children: [
-                Image.asset('assets/images/board.png'),
+                Image.asset(Images.board),
                 _boardTiles(),
               ]),
             ),
@@ -82,6 +84,7 @@ class _TicTacToeState extends State<TicTacToe> {
                 final tileIndex = (chunkIndex * 3) + innerIndex;
 
                 return BoardTile(
+                  
                   tileState: tileState,
                   dimension: tileDimension,
                   onPressed: () => _updateTileStateForIndex(tileIndex),
@@ -156,10 +159,10 @@ class _TicTacToeState extends State<TicTacToe> {
         context: context!,
         builder: (_) {
           return AlertDialog(
-            title: Text('Winner'),
+            title: Text(AppStrings.winner),
             content: Image.asset(tileState == TileState.CROSS
-                ? 'assets/images/x.png'
-                : 'assets/images/o.png'),
+                ? Images.crossImage
+                : Images.circleImage),
             actions: [
               // ignore: deprecated_member_use
               TextButton(
@@ -167,7 +170,7 @@ class _TicTacToeState extends State<TicTacToe> {
                     _resetGame();
                     Navigator.of(context).pop();
                   },
-                  child: Text('New Game'))
+                  child: Text(AppStrings.newGame))
             ],
           );
         });
@@ -180,15 +183,15 @@ class _TicTacToeState extends State<TicTacToe> {
         context: context!,
         builder: (_) {
           return AlertDialog(
-            title: Text("It's Tie"),
-            content: Image.asset('assets/images/tie.png'),
+            title: Text(AppStrings.matchTie),
+            content: Image.asset(Images.tie),
             actions: [
               TextButton(
                   onPressed: () {
                     _resetGame();
                     Navigator.of(context).pop();
                   },
-                  child: Text('New Game'))
+                  child: Text(AppStrings.newGame))
             ],
           );
         });
