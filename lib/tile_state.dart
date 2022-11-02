@@ -1,6 +1,6 @@
 import 'dart:math';
 
-enum TileState { EMPTY, CROSS, CIRCLE }
+enum TileState { EMPTY, CROSS, CIRCLE, TIE}
 
 List<List<TileState>> chunk(List<TileState> list, int size) {
   return List.generate(

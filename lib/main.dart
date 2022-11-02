@@ -16,6 +16,7 @@ class _TicTacToeState extends State<TicTacToe> {
   final navigatorKey = GlobalKey<NavigatorState>();
   var _boardState = List.filled(9, TileState.EMPTY);
   var _currentTurn = TileState.CROSS;
+  int _totalFilledIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class _TicTacToeState extends State<TicTacToe> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: IconButton(
+                    tooltip: 'Restart',
                     icon: Icon(
                       Icons.refresh,
                       size: 28,
@@ -98,18 +100,20 @@ class _TicTacToeState extends State<TicTacToe> {
         _currentTurn = _currentTurn == TileState.CROSS
             ? TileState.CIRCLE
             : TileState.CROSS;
+        _totalFilledIndex++;    
       });
 
       final winner = _findWinner();
       if (winner != null) {
-        print('Winner is: $winner');
         _showWinnerDialog(winner);
+      }else if(winner == null && _totalFilledIndex == 9){
+        _showDrawDialog();
       }
     }
   }
 
   //Find Winner
-  TileState _findWinner() {
+  TileState? _findWinner() {
     TileState? Function(int, int, int) winnerForMatch = (a, b, c) {
       if (_boardState[a] != TileState.EMPTY) {
         if ((_boardState[a] == _boardState[b]) &&
@@ -117,7 +121,7 @@ class _TicTacToeState extends State<TicTacToe> {
           return _boardState[a];
         }
       }
-      
+
       return null;
     };
 
@@ -137,12 +141,12 @@ class _TicTacToeState extends State<TicTacToe> {
 
     for (int i = 0; i < checks.length; i++) {
       if (checks[i] != null) {
-        winner = checks[i];
+        winner = checks[i]!;
         break;
       }
     }
 
-    return winner!;
+    return winner;
   }
 
   //Dialog
@@ -169,11 +173,33 @@ class _TicTacToeState extends State<TicTacToe> {
         });
   }
 
+  //Draw Dialog
+  void _showDrawDialog() {
+    final context = navigatorKey.currentState?.overlay?.context;
+    showDialog(
+        context: context!,
+        builder: (_) {
+          return AlertDialog(
+            title: Text("It's Tie"),
+            content: Image.asset('assets/images/tie.png'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    _resetGame();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('New Game'))
+            ],
+          );
+        });
+  }
+
   //Reset Game
   void _resetGame() {
     setState(() {
       _boardState = List.filled(9, TileState.EMPTY);
       _currentTurn = TileState.CROSS;
+      _totalFilledIndex = 0;
     });
   }
 }

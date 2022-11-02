@@ -46,6 +46,11 @@ class BoardTile extends StatelessWidget {
           widget = Image.asset('assets/images/o.png');
         }
         break;
+
+      case TileState.TIE:
+        {
+          widget = Image.asset('assets/image/tie.png');
+        }
     }
 
     return widget;
